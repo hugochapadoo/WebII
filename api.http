@@ -1,0 +1,140 @@
+@baseUrl = http://localhost:3000
+@accessToken = your_token
+@refreshToken = your_token
+
+### root
+GET {{baseUrl}}/
+
+### register
+POST {{baseUrl}}/api/user/register
+Content-Type: application/json
+
+{
+  "email": "verifinal97601@test.com",
+  "password": "12345678"
+}
+
+### validate
+PUT {{baseUrl}}/api/user/validation
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "code": "your_code"
+}
+
+### login
+POST {{baseUrl}}/api/user/login
+Content-Type: application/json
+
+{
+  "email": "verifinal901@test.com",
+  "password": "12345678"
+}
+
+### complete register
+PUT {{baseUrl}}/api/user/register
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "Javier",
+  "lastName": "Suarez",
+  "phone": "123456789",
+  "nif": "12345678A",
+  "birthDate": "2003-01-01",
+  "address": {
+    "street": "Gran Via",
+    "number": "10",
+    "postal": "28013",
+    "city": "Madrid",
+    "province": "Madrid"
+  }
+}
+
+### create company
+PATCH {{baseUrl}}/api/user/company
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "cif": "B90100001",
+  "name": "Verify Final Company",
+  "address": {
+    "street": "Alcala",
+    "number": "22",
+    "postal": "28014",
+    "city": "Madrid",
+    "province": "Madrid"
+  },
+  "isFreelance": false
+}
+
+### get me
+GET {{baseUrl}}/api/user
+Authorization: Bearer {{accessToken}}
+
+### refresh token
+POST {{baseUrl}}/api/user/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
+
+### logout
+POST {{baseUrl}}/api/user/logout
+Authorization: Bearer {{accessToken}}
+
+### login again
+POST {{baseUrl}}/api/user/login
+Content-Type: application/json
+
+{
+  "email": "verifinal901@test.com",
+  "password": "12345678"
+}
+
+### change password
+PUT {{baseUrl}}/api/user/password
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "currentPassword": "12345678",
+  "newPassword": "87654321"
+}
+
+### login with new password
+POST {{baseUrl}}/api/user/login
+Content-Type: application/json
+
+{
+  "email": "verifinal901@test.com",
+  "password": "87654321"
+}
+
+### invite guest, wont work as user, expected.
+POST {{baseUrl}}/api/user/invite
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "email": "guest901@test.com"
+}
+
+### upload logo
+PATCH {{baseUrl}}/api/user/logo
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=MyBoundary
+
+--MyBoundary
+Content-Disposition: form-data; name="logo"; filename="spain.jpg"
+Content-Type: image/jpeg
+
+< ./spain.jpg
+--MyBoundary--
+
+### soft delete
+DELETE {{baseUrl}}/api/user?soft=true
+Authorization: Bearer {{accessToken}}
